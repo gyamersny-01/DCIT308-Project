@@ -6,3 +6,8 @@ javac Main.java model/Expenditure.java structure/MyHashMap.java service/Expendit
 
 Then run:
 java Main
+
+
+
+## Documentation
+1- Used stacks to store the progress of the user when adding expenditure items, such that the user could go back when he enters a wrong value. 

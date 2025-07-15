@@ -1,38 +1,47 @@
 import service.ExpenditureService;
+import service.CategoryService;
 
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         ExpenditureService.loadExpendituresFromFile();
+        CategoryService.loadCategoriesFromFile();
 
         while (true) {
-            printMainMenu();
-            String choice = scanner.nextLine().trim();
+            System.out.println("\n--- Nkwa Expenditure Management System ---");
+            System.out.println("1. Add Expenditure");
+            System.out.println("2. View All Expenditures");
+            System.out.println("3. Add Category");
+            System.out.println("4. View All Categories");
+            System.out.println("5. Search Category");
+            System.out.println("0. Exit");
+            System.out.print("Choose an option: ");
 
-            switch (choice) {
+            String option = scanner.nextLine().trim();
+            switch (option) {
                 case "1":
                     ExpenditureService.addExpenditure();
                     break;
                 case "2":
                     ExpenditureService.viewAllExpenditures();
                     break;
-                case "8":
-                    System.out.println("Exiting system. Goodbye!");
-                    System.exit(0);
+                case "3":
+                    CategoryService.addCategory();
+                    break;
+                case "4":
+                    CategoryService.viewAllCategories();
+                    break;
+                case "5":
+                    CategoryService.searchCategory();
+                    break;
+                case "0":
+                    System.out.println("Exiting... Goodbye!");
+                    return;
                 default:
-                    System.out.println("Invalid input. Please try again.");
+                    System.out.println("Invalid option. Please try again.");
             }
         }
-    }
-
-    private static void printMainMenu() {
-        System.out.println("\n====== Nkwa Expenditure Management System ======");
-        System.out.println("1. Add Expenditure");
-        System.out.println("2. View All Expenditures");
-        System.out.println("8. Exit");
-        System.out.print("Enter your choice: ");
     }
 }
