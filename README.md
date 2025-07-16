@@ -16,3 +16,5 @@ java Main
 The helper method collectExpenditures() converts the map into an array
 
 The receipts are being tracked by a Queue
+
+The system gives the user the opportunity to enter a threshold for the low bank balance alert.

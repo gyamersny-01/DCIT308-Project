@@ -20,9 +20,16 @@ public class BankAccount {
     public double getBalance() { return balance; }
     public void setBalance(double balance) { this.balance = balance; }
     public MyLinkedList getExpenditureCodes() { return expenditureCodes; }
+    public String getId() { return accountId; }
 
     public void addExpenditureCode(String code) {
         expenditureCodes.add(code);
+    }
+    public void deduct(double amount) {
+    this.balance -= amount;
+        if (this.balance < 0) {
+            System.out.println("Warning: Account " + accountId + " has gone below zero balance!");
+        }
     }
 
     @Override
