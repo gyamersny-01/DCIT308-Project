@@ -27,6 +27,10 @@ public class Main {
             System.out.println("10. Review Receipts");
             System.out.println("11. View Low Balance Accounts");
             System.out.println("12. Track Cash Flow");
+            System.out.println("13. Forecast Profitability");
+            System.out.println("14. Analyze Material Price Impact");
+
+
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -68,6 +72,14 @@ public class Main {
                 case "12":
                     ExpenditureService.trackMonthlyBurnRate();
                     break;
+                case "13":
+                    ExpenditureService.forecastProfitability();
+                    break;
+                case "14":
+                    ExpenditureService.analyzeMaterialImpact();
+                    break;
+
+
                 case "0":
                     System.out.println("\nExiting... Goodbye!\n");
                     return;
