@@ -14,3 +14,5 @@ java Main
 1- Used stacks to store the progress of the user when adding expenditure items, such that the user could go back when he enters a wrong value. 
 
 The helper method collectExpenditures() converts the map into an array
+
+The receipts are being tracked by a Queue

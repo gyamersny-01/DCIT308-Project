@@ -10,6 +10,84 @@ import java.util.Scanner;
 
 public class ExpenditureService {
 
+    public static void searchMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("--- Search Expenditures ---");
+            System.out.println("1. By Time Range");
+            System.out.println("2. By Category");
+            System.out.println("3. By Cost Range");
+            System.out.println("4. By Bank Account Used");
+            System.out.println("0. Back to Main Menu");
+            System.out.print("Choose an option: ");
+            String option = scanner.nextLine().trim();
+            switch (option) {
+                case "1": searchByDateRange(); break;
+                case "2": searchByCategory(); break;
+                case "3": searchByCostRange(); break;
+                case "4": searchByAccount(); break;
+                case "0": return;
+                default: System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    private static void searchByDateRange() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter start date (yyyy-mm-dd): ");
+        String start = scanner.nextLine().trim();
+        System.out.print("Enter end date (yyyy-mm-dd): ");
+        String end = scanner.nextLine().trim();
+
+        System.out.println("Expenditures from " + start + " to " + end + ":");
+        expenditures.forEach((code, exp) -> {
+            if (exp.getDate().compareTo(start) >= 0 && exp.getDate().compareTo(end) <= 0) {
+                printExpenditure(exp);
+            }
+        });
+    }
+
+    private static void searchByCategory() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter category: ");
+        String category = scanner.nextLine().trim();
+
+        System.out.println("Expenditures in category: " + category);
+        expenditures.forEach((code, exp) -> {
+            if (exp.getCategory().equalsIgnoreCase(category)) {
+                printExpenditure(exp);
+            }
+        });
+    }
+
+    private static void searchByCostRange() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter minimum amount: ");
+        double min = Double.parseDouble(scanner.nextLine().trim());
+        System.out.print("Enter maximum amount: ");
+        double max = Double.parseDouble(scanner.nextLine().trim());
+
+        System.out.println("Expenditures between GHS " + min + " and GHS " + max + ":");
+        expenditures.forEach((code, exp) -> {
+            if (exp.getAmount() >= min && exp.getAmount() <= max) {
+                printExpenditure(exp);
+            }
+        });
+    }
+
+    private static void searchByAccount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter bank account ID: ");
+        String accId = scanner.nextLine().trim();
+
+        System.out.println("Expenditures using account: " + accId);
+        expenditures.forEach((code, exp) -> {
+            if (exp.getAccountId().equalsIgnoreCase(accId)) {
+                printExpenditure(exp);
+            }
+        });
+    }
+
     public static void sortMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -75,94 +153,6 @@ public class ExpenditureService {
         }
         return result;
     }
-
-    public static void searchMenu() {
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("--- Search Expenditures ---");
-            System.out.println("1. By Time Range");
-            System.out.println("2. By Category");
-            System.out.println("3. By Cost Range");
-            System.out.println("4. By Bank Account Used");
-            System.out.println("0. Back to Main Menu");
-            System.out.print("Choose an option: ");
-            String option = scanner.nextLine().trim();
-            switch (option) {
-                case "1": searchByDateRange(); break;
-                case "2": searchByCategory(); break;
-                case "3": searchByCostRange(); break;
-                case "4": searchByAccount(); break;
-                case "0": return;
-                default: System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
-
-    private static void searchByDateRange() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter start date (yyyy-mm-dd): ");
-        String start = scanner.nextLine().trim();
-        System.out.print("Enter end date (yyyy-mm-dd): ");
-        String end = scanner.nextLine().trim();
-
-        System.out.println("--- Expenditures from " + start + " to " + end + ":");
-        expenditures.forEach((code, exp) -> {
-            if (exp.getDate().compareTo(start) >= 0 && exp.getDate().compareTo(end) <= 0) {
-                printExpenditure(exp);
-            }
-        });
-    }
-
-    private static void searchByCategory() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter category: ");
-        String category = scanner.nextLine().trim();
-
-        System.out.println("Expenditures in category: " + category);
-        expenditures.forEach((code, exp) -> {
-            if (exp.getCategory().equalsIgnoreCase(category)) {
-                printExpenditure(exp);
-            }
-        });
-    }
-
-    private static void searchByCostRange() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter minimum amount: ");
-        double min = Double.parseDouble(scanner.nextLine().trim());
-        System.out.print("Enter maximum amount: ");
-        double max = Double.parseDouble(scanner.nextLine().trim());
-
-        System.out.println("Expenditures between GHS " + min + " and GHS " + max + ":");
-        expenditures.forEach((code, exp) -> {
-            if (exp.getAmount() >= min && exp.getAmount() <= max) {
-                printExpenditure(exp);
-            }
-        });
-    }
-
-    private static void searchByAccount() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter bank account ID: ");
-        String accId = scanner.nextLine().trim();
-
-        System.out.println("Expenditures using account: " + accId);
-        expenditures.forEach((code, exp) -> {
-            if (exp.getAccountId().equalsIgnoreCase(accId)) {
-                printExpenditure(exp);
-            }
-        });
-    }
-
-    private static void printExpenditure(Expenditure exp) {
-        System.out.println("Code: " + exp.getCode());
-        System.out.println("Amount: GHS " + exp.getAmount());
-        System.out.println("Date: " + exp.getDate());
-        System.out.println("Phase: " + exp.getPhase());
-        System.out.println("Category: " + exp.getCategory());
-        System.out.println("Bank Account: " + exp.getAccountId());
-        System.out.println("-----------------------------------");
-    }
     private static final String FILE_PATH = "data/expenditures.txt";
     private static MyMap<String, Expenditure> expenditures = new MyMap<>();
 
@@ -171,8 +161,8 @@ public class ExpenditureService {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split("\\|");
-                if (parts.length == 6) {
-                    Expenditure exp = new Expenditure(parts[0], Double.parseDouble(parts[1]), parts[2], parts[3], parts[4], parts[5]);
+                if (parts.length >= 7) {
+                    Expenditure exp = new Expenditure(parts[0], Double.parseDouble(parts[1]), parts[2], parts[3], parts[4], parts[5], parts[6]);
                     expenditures.put(parts[0], exp);
                 }
             }
@@ -206,14 +196,18 @@ public class ExpenditureService {
 
         String category = CategoryService.selectCategoryFromList();
 
+        BankAccountService.viewAllAccountIDs();
         System.out.print("Enter account ID: ");
         String accountId = scanner.nextLine().trim();
 
-        Expenditure expenditure = new Expenditure(code, amount, date, phase, category, accountId);
+        System.out.print("Enter receipt description or ID: ");
+        String receiptNote = scanner.nextLine().trim();
+
+        Expenditure expenditure = new Expenditure(code, amount, date, phase, category, accountId, receiptNote);
         expenditures.put(code, expenditure);
         appendToFile(expenditure);
+        ReceiptService.uploadReceipt(code, receiptNote);
 
-        // Update bank account link
         BankAccount account = BankAccountService.getAccount(accountId);
         if (account != null) {
             account.addExpenditureCode(code);
@@ -235,13 +229,18 @@ public class ExpenditureService {
     public static void viewAllExpenditures() {
         System.out.println("--- All Expenditures ---");
         expenditures.forEach((code, exp) -> {
-            System.out.println("Code: " + exp.getCode());
-            System.out.println("Amount: GHS " + exp.getAmount());
-            System.out.println("Date: " + exp.getDate());
-            System.out.println("Phase: " + exp.getPhase());
-            System.out.println("Category: " + exp.getCategory());
-            System.out.println("Bank Account: " + exp.getAccountId());
-            System.out.println("-----------------------------------\n");
+            printExpenditure(exp);
         });
+    }
+
+    private static void printExpenditure(Expenditure exp) {
+        System.out.println("Code: " + exp.getCode());
+        System.out.println("Amount: GHS " + exp.getAmount());
+        System.out.println("Date: " + exp.getDate());
+        System.out.println("Phase: " + exp.getPhase());
+        System.out.println("Category: " + exp.getCategory());
+        System.out.println("Bank Account: " + exp.getAccountId());
+        System.out.println("Receipt: " + exp.getReceiptNote());
+        System.out.println("-----------------------------------");
     }
 }
