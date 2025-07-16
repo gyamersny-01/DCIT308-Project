@@ -24,6 +24,7 @@ public class Main {
             System.out.println("7. View Bank Accounts");
             System.out.println("8. Search Expenditures");
             System.out.println("9. Sort Expenditures");
+            System.out.println("10. Review Receipts");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -55,6 +56,9 @@ public class Main {
                     break;
                 case "9":
                     ExpenditureService.sortMenu();
+                    break;
+                case "10":
+                    ExpenditureService.reviewReceiptMenu();
                     break;
                 case "0":
                     System.out.println("\nExiting... Goodbye!\n");

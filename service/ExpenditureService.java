@@ -10,6 +10,26 @@ import java.util.Scanner;
 
 public class ExpenditureService {
 
+    public static void reviewReceiptMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("--- Receipt Review ---");
+            System.out.println("1. Review Next Receipt");
+            System.out.println("0. Back to Main Menu");
+            System.out.print("Choose an option: ");
+            String input = scanner.nextLine().trim();
+            switch (input) {
+                case "1":
+                    ReceiptService.reviewNextReceipt();
+                    break;
+                case "0":
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
     public static void searchMenu() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
