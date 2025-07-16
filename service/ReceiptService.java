@@ -1,7 +1,7 @@
 package service;
 
 import structure.MyQueue;
-
+import model.Expenditure;
 import java.io.*;
 
 public class ReceiptService {
@@ -25,6 +25,12 @@ public class ReceiptService {
             return;
         }
         String code = receiptQueue.dequeue();
-        System.out.println("Reviewing receipt for expenditure: " + code);
+        Expenditure exp = ExpenditureService.getExpenditureByCode(code);
+        if (exp != null) {
+            System.out.println("\n--- Reviewing Receipt ---");
+            ExpenditureService.printExpenditure(exp);
+        } else {
+            System.out.println("Expenditure not found for code: " + code);
+        }
     }
 }

@@ -26,6 +26,7 @@ public class Main {
             System.out.println("9. Sort Expenditures");
             System.out.println("10. Review Receipts");
             System.out.println("11. View Low Balance Accounts");
+            System.out.println("12. Track Cash Flow");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -63,6 +64,9 @@ public class Main {
                     break;
                 case "11":
                     ExpenditureService.alertLowBalances();
+                    break;
+                case "12":
+                    ExpenditureService.trackMonthlyBurnRate();
                     break;
                 case "0":
                     System.out.println("\nExiting... Goodbye!\n");

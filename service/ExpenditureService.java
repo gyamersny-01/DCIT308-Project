@@ -13,6 +13,112 @@ public class ExpenditureService {
     private static MyMap<String, Expenditure> expenditures = new MyMap<>();
     private static MinHeapBankAlert minHeap = new MinHeapBankAlert(50);
 
+
+    public static void analyzeMaterialImpact() {
+        String[] materials = {"cement", "bricks", "blocks", "sand", "iron rods", "wood", "tiles"};
+        MyMap<String, Double> materialTotals = new MyMap<>();
+        MyMap<String, Integer> materialCounts = new MyMap<>();
+
+        expenditures.forEach((code, exp) -> {
+            String category = exp.getCategory().toLowerCase();
+            for (String mat : materials) {
+                if (category.contains(mat)) {
+                    Double currentTotal = materialTotals.get(mat);
+                    Integer count = materialCounts.get(mat);
+                    if (currentTotal == null) currentTotal = 0.0;
+                    if (count == null) count = 0;
+                    materialTotals.put(mat, currentTotal + exp.getAmount());
+                    materialCounts.put(mat, count + 1);
+                }
+            }
+        });
+
+        System.out.println("--- Building Material Price Impact ---");
+        final double[] total = {0};
+        materialTotals.forEach((mat, amt) -> {
+            int count = materialCounts.get(mat);
+            double avg = amt / count;
+            System.out.println(capitalize(mat) + " - Total: GHS " + amt + ", Avg: GHS " + String.format("%.2f", avg));
+            total[0] += amt;
+        });
+
+        System.out.println("Total material-related expenditure: GHS " + total[0]);
+        double costPerHouse = 50000; // assumed base cost
+        double housesAffordable = 1000000 / (costPerHouse + total[0] / 10); // simulate effect
+        System.out.println("Estimated number of affordable houses with adjusted material cost: " + (int) housesAffordable);
+    }
+
+    private static String capitalize(String word) {
+        return word.substring(0,1).toUpperCase() + word.substring(1);
+    }
+    public static void forecastProfitability() {
+        MyMap<String, Double> monthlyTotals = new MyMap<>();
+        expenditures.forEach((code, exp) -> {
+            String[] parts = exp.getDate().split("-");
+            if (parts.length >= 2) {
+                String yearMonth = parts[0] + "-" + parts[1];
+                Double current = monthlyTotals.get(yearMonth);
+                if (current == null) current = 0.0;
+                monthlyTotals.put(yearMonth, current + exp.getAmount());
+            }
+        });
+
+        // Count number of months
+        final int[] count = {0};
+        monthlyTotals.forEach((m, v) -> count[0]++);
+        String[] months = new String[count[0]];
+
+        // Collect months
+        final int[] index = {0};
+        monthlyTotals.forEach((m, v) -> months[index[0]++] = m);
+
+        // Sort months
+        for (int j = 0; j < months.length - 1; j++) {
+            for (int k = j + 1; k < months.length; k++) {
+                if (months[j].compareTo(months[k]) > 0) {
+                    String temp = months[j];
+                    months[j] = months[k];
+                    months[k] = temp;
+                }
+            }
+        }
+
+        System.out.println("--- Profit Forecast ---");
+        double prev = -1;
+        for (String month : months) {
+            double total = monthlyTotals.get(month);
+            System.out.println(month + " - GHS " + total);
+            if (prev != -1) {
+                if (total > prev) {
+                    System.out.println("↑ Costs increased compared to last month");
+                } else if (total < prev) {
+                    System.out.println("↓ Costs decreased compared to last month");
+                } else {
+                    System.out.println("→ Costs remained the same");
+                }
+            }
+            prev = total;
+        }
+    }
+
+
+    public static void trackMonthlyBurnRate() {
+        MyMap<String, Double> monthlyTotals = new MyMap<>();
+        expenditures.forEach((code, exp) -> {
+            String[] parts = exp.getDate().split("-");
+            if (parts.length >= 2) {
+                String yearMonth = parts[0] + "-" + parts[1];
+                Double currentTotal = monthlyTotals.get(yearMonth);
+                if (currentTotal == null) currentTotal = 0.0;
+                monthlyTotals.put(yearMonth, currentTotal + exp.getAmount());
+            }
+        });
+
+        System.out.println("--- Monthly Burn Rate ---");
+        monthlyTotals.forEach((month, total) -> {
+            System.out.println(month + " - GHS " + total);
+        });
+    }
     public static void loadExpendituresFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -75,6 +181,9 @@ public class ExpenditureService {
 
         System.out.println("Expenditure added successfully.");
     }
+    public static Expenditure getExpenditureByCode(String code) {
+    return expenditures.get(code);
+ }   
 
     private static void appendToFile(Expenditure exp) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))) {
@@ -92,7 +201,7 @@ public class ExpenditureService {
         });
     }
 
-    private static void printExpenditure(Expenditure exp) {
+    public static void printExpenditure(Expenditure exp) {
         System.out.println("Code: " + exp.getCode());
         System.out.println("Amount: GHS " + exp.getAmount());
         System.out.println("Date: " + exp.getDate());
