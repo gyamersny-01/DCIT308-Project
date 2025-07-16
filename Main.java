@@ -22,6 +22,8 @@ public class Main {
             System.out.println("5. Search Category");
             System.out.println("6. Add Bank Account");
             System.out.println("7. View Bank Accounts");
+            System.out.println("8. Search Expenditures");
+            System.out.println("9. Sort Expenditures");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -48,8 +50,14 @@ public class Main {
                 case "7":
                     BankAccountService.viewAllAccounts();
                     break;
+                case "8":
+                    ExpenditureService.searchMenu();
+                    break;
+                case "9":
+                    ExpenditureService.sortMenu();
+                    break;
                 case "0":
-                    System.out.println("Exiting... Goodbye!");
+                    System.out.println("\nExiting... Goodbye!\n");
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
