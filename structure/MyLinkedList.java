@@ -34,4 +34,18 @@ public class MyLinkedList {
             current = current.next;
         }
     }
+
+    // 👇 Add this method
+    public void forEach(MyLinkedListConsumer action) {
+        Node current = head;
+        while (current != null) {
+            action.accept(current.data);
+            current = current.next;
+        }
+    }
+
+    // 👇 Interface to support forEach lambda
+    public interface MyLinkedListConsumer {
+        void accept(String data);
+    }
 }

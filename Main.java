@@ -1,13 +1,17 @@
 import service.ExpenditureService;
 import service.CategoryService;
+import service.BankAccountService;
+import structure.MyLinkedList;
 
 import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ExpenditureService.loadExpendituresFromFile();
         CategoryService.loadCategoriesFromFile();
+        BankAccountService.loadAccountsFromFile();
 
         while (true) {
             System.out.println("\n--- Nkwa Expenditure Management System ---");
@@ -16,6 +20,8 @@ public class Main {
             System.out.println("3. Add Category");
             System.out.println("4. View All Categories");
             System.out.println("5. Search Category");
+            System.out.println("6. Add Bank Account");
+            System.out.println("7. View Bank Accounts");
             System.out.println("0. Exit");
             System.out.print("Choose an option: ");
 
@@ -35,6 +41,12 @@ public class Main {
                     break;
                 case "5":
                     CategoryService.searchCategory();
+                    break;
+                case "6":
+                    BankAccountService.addBankAccount();
+                    break;
+                case "7":
+                    BankAccountService.viewAllAccounts();
                     break;
                 case "0":
                     System.out.println("Exiting... Goodbye!");
