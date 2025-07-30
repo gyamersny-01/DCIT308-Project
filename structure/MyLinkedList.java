@@ -35,7 +35,7 @@ public class MyLinkedList {
         }
     }
 
-    // 👇 Add this method
+
     public void forEach(MyLinkedListConsumer action) {
         Node current = head;
         while (current != null) {
@@ -44,7 +44,7 @@ public class MyLinkedList {
         }
     }
 
-    // 👇 Interface to support forEach lambda
+
     public interface MyLinkedListConsumer {
         void accept(String data);
     }

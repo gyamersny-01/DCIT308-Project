@@ -137,13 +137,13 @@ public class ExpenditureService {
     public static void addExpenditure() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter code: ");
+        System.out.print("Enter code (e.g., EXP001): ");
         String code = scanner.nextLine().trim();
 
         double amount = 0;
         while (true) {
             try {
-                System.out.print("Enter amount: ");
+                System.out.print("Enter amount (e.g. 100.50): ");
                 amount = Double.parseDouble(scanner.nextLine().trim());
                 break;
             } catch (NumberFormatException e) {
@@ -152,7 +152,7 @@ public class ExpenditureService {
         }
 
         System.out.print("Enter date (yyyy-mm-dd): ");
-        String date = scanner.nextLine().trim();
+        String date = scanner.nextLine().trim();//2004-03-24   
 
         System.out.print("Enter phase (e.g., construction, marketing, sales): ");
         String phase = scanner.nextLine().trim();
@@ -160,10 +160,10 @@ public class ExpenditureService {
         String category = CategoryService.selectCategoryFromList();
 
         BankAccountService.viewAllAccountIDs();
-        System.out.print("Enter account ID: ");
+        System.out.print("Enter account ID (e.g., EF001): ");
         String accountId = scanner.nextLine().trim();
 
-        System.out.print("Enter receipt description or ID: ");
+        System.out.print("Enter receipt description/reference or ID: ");
         String receiptNote = scanner.nextLine().trim();
 
         Expenditure expenditure = new Expenditure(code, amount, date, phase, category, accountId, receiptNote);
@@ -181,6 +181,8 @@ public class ExpenditureService {
 
         System.out.println("Expenditure added successfully.");
     }
+
+    
     public static Expenditure getExpenditureByCode(String code) {
     return expenditures.get(code);
  }   

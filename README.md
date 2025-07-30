@@ -20,3 +20,6 @@ The receipts are being tracked by a Queue
 The system gives the user the opportunity to enter a threshold for the low bank balance alert.
 
 The cash  flow gives a general account of how funds were allocated per expenditure in every  month
+
+
+*Add extra info to the receipt method in the addexpenditure
